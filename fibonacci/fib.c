@@ -19,6 +19,9 @@ int main() {
    for (int i = 0; i < lim; i++) {
 
       n = a + b;
+
+      if (n < b) break;
+      
       a = b;
       b = n;
 
