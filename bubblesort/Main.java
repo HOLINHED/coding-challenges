@@ -9,16 +9,17 @@ public class Main {
 
      public static void main(String[] args){
         
-        int[] nums = new int[24];
+        final int n = (int) Math.floor(Math.random() * 20); 
+        int[] nums = new int[n];
 
         for (int i = 0; i < nums.length; i++)
             nums[i] = (int) Math.floor(Math.random() * 255);
         
         System.out.println(Arrays.toString(nums));
         
-        int c = 10;
+        int c;
         
-        while (c > 0) {
+        do {
             c = 0;
             
             for (int i = 1; i < nums.length; i++) {
@@ -29,7 +30,8 @@ public class Main {
                     c += 1;
                 }
             }
-        }
+
+        } while (c > 0);
         
         System.out.println(Arrays.toString(nums));
         
