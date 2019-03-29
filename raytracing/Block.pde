@@ -14,7 +14,7 @@ class Block {
   }
   
   boolean collide(float x, float y) {
-    return (x > this.x && x < this.x + 40) && (y > this.y && y < this.y + 40);
+    return (x >= this.x && x <= this.x + 40) && (y >= this.y && y <= this.y + 40);
   }
 
 
