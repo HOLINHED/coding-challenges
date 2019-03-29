@@ -19,21 +19,15 @@ public class sort  {
 
       int[] nums = digits.ToArray();
 
-      int changes;
-
-      do {
-
-         changes = 0;
-         for (int i = 1; i < nums.Length; i++) {
-            if (nums[i - 1] > nums[i]) {
-               int temp = nums[i - 1];
-               nums[i - 1] = nums[i];
-               nums[i] = temp;
-               changes += 1;
+      for (int i = 0; i < nums.Length; i++) {
+         for (int j = 0; j < nums.Length - i - 1; j++) {
+            if (nums[j] > nums[j + 1]) {
+               int temp = nums[j + 1];
+               nums[j + 1] = nums[j];
+               nums[j] = temp;
             }
          }
-
-      } while (changes > 0);
+      }
 
       return nums
             .Select((t, i) => t * Convert.ToInt32(Math.Pow(10, nums.Length - i - 1)))
