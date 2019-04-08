@@ -18,5 +18,6 @@ void keyPressed() {
    switch(keyCode){
       case 37: peice.rotate90();break;
       case 39: peice.rotate90neg();break;
+      case 32: peice = new Peice(11,5);break;
    }
 }

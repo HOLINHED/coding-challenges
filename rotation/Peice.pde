@@ -19,8 +19,8 @@ class Peice {
    
    void draw() {
       fill(red(fill),green(fill),blue(fill));
-      for (int i = 0; i < 4; i++) {
-         for (int j = 0; j < 4; j++) {
+      for (int i = 0; i < data.length; i++) {
+         for (int j = 0; j < data[0].length; j++) {
             if (data[i][j] == '*') {
                rect((x + j) * SCALE, (y + i) * SCALE, SCALE, SCALE);
             }
@@ -30,9 +30,9 @@ class Peice {
    
    void rotate90() {
       char[][] rot = new char[4][4];
-      for (int x = 0; x < 4; x++) {
-         for (int y = 0; y < 4; y++) {
-            rot[y][x] = data[x][3 - y];
+      for (int x = 0; x < data[0].length; x++) {
+         for (int y = 0; y < data.length; y++) {
+           rot[y][x] = data[x][(data.length - 1) - y];
          }
       }
       data = rot;
@@ -40,9 +40,9 @@ class Peice {
    
    void rotate90neg() {
       char[][] rot = new char[4][4];
-      for (int x = 0; x < 4; x++) {
-         for (int y = 0; y < 4; y++) {
-            rot[y][x] = data[3 - x][y];
+      for (int x = 0; x < data[0].length; x++) {
+         for (int y = 0; y < data.length; y++) {
+            rot[y][x] = data[(data[0].length - 1) - x][y];
          }
       }
       data = rot;
