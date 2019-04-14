@@ -14,7 +14,6 @@ class Peice {
       fill = Integer.parseInt(r.Color, 16);
       
       data = r.data;
-      
    }
    
    void draw() {
@@ -32,7 +31,7 @@ class Peice {
       char[][] rot = new char[4][4];
       for (int x = 0; x < data[0].length; x++) {
          for (int y = 0; y < data.length; y++) {
-           rot[y][x] = data[x][(data.length - 1) - y];
+            rot[y][x] = data[x][(data.length - 1) - y];
          }
       }
       data = rot;
