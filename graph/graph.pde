@@ -1,8 +1,10 @@
-ArrayList<Integer> data = new ArrayList<Integer>();
+ArrayList<Integer> data  = new ArrayList<Integer>();
 ArrayList<Integer> data2 = new ArrayList<Integer>();
+ArrayList<Integer> gap   = new ArrayList<Integer>();
 
 int max = 0;
 int min = 0;
+int gmax = 0;
 
 int r1 = -100;
 int r2 = 400;
@@ -37,8 +39,13 @@ void draw() {
    }
    
    final int[] val2 = new int[data2.size()];
-   for (int i = 0; i < val1.length; i++) {
+   for (int i = 0; i < val2.length; i++) {
       val2[i] = data2.get(i);
+   }
+   
+   final int[] val3 = new int[gap.size()];
+   for (int i = 0; i < val3.length; i++) {
+      val3[i] = gap.get(i);
    }
    
    // draw graph
@@ -47,7 +54,7 @@ void draw() {
    int py = height;
    
    stroke(0,255,255);
-   text(numberFormat(curr), 20, 30);
+   text(numberFormat(curr) + " (" + numberFormat(r1) + " " + numberFormat(r2) + ")", 20, 30);
    
    final int SCALE = width / data.size();
    for (int i = 0; i < data.size(); i++) {
@@ -57,7 +64,7 @@ void draw() {
       if (dmax > max) max = dmax;
       if (dmin > min) min = dmin;
       
-      final int y = (int) map(data.get(i), min, max, height, 0);
+      final int y = (int) map(data.get(i), min, max * 1.15, height, 0);
       final int x = i * SCALE;
       
       line(x,y,px,py);
@@ -70,7 +77,7 @@ void draw() {
    py = height;
    
    stroke(255,0,0);
-   text(numberFormat(curr2), 20, 60);
+   text(numberFormat(curr2)  + " (" + numberFormat(r3) + " " + numberFormat(r4) + ")", 20, 60);
    
    for (int i = 0; i < data2.size(); i++) {
       
@@ -79,7 +86,7 @@ void draw() {
       if (dmax > max) max = dmax;
       if (dmin > min) min = dmin;
       
-      final int y = (int) map(data2.get(i), min, max, height, 0);
+      final int y = (int) map(data2.get(i), min, max * 1.15, height, 0);
       final int x = i * SCALE;
       
       line(x,y,px,py);
@@ -88,11 +95,32 @@ void draw() {
       py = y;
    }
    
-   if (random(1) < 0.5) {
+   // gap
+   stroke(255,255,0);
+   
+   px = 0;
+   py = height;
+   
+   for (int i = 0; i < gap.size(); i++) {
+      
+      final int dmax = max(val3);
+      if (dmax > gmax) gmax = dmax;
+      
+      final int y = (int) map(gap.get(i), 0, gmax * 2, height, 0);
+      final int x = i * SCALE;
+      
+      line(x,y,px,py);
+      
+      px = x;
+      py = y;
+   }
+   
+   if (true) {
       curr += floor(random(r1, r2));
       curr2 += floor(random(r3, r4));
       data.add(curr);
       data2.add(curr2);
+      gap.add(abs(curr - curr2));
       
       r1 += random(-100,25);
       r2 += random(-300,500);
@@ -103,6 +131,7 @@ void draw() {
    if (data.size() > width) {
       data.remove(0);
       data2.remove(0);
+      gap.remove(0);
    }
 }
 
