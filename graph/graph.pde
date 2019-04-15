@@ -2,6 +2,8 @@ ArrayList<Integer> data  = new ArrayList<Integer>();
 ArrayList<Integer> data2 = new ArrayList<Integer>();
 ArrayList<Integer> gap   = new ArrayList<Integer>();
 
+int highest = 0;
+
 int max = 0;
 int min = 0;
 int gmax = 0;
@@ -33,6 +35,7 @@ void draw() {
    fill(255);
    text("Gap: " + numberFormat(abs(curr - curr2)), 20, 90);
    text("Streak: " + numberFormat(streak), 20, 120);
+   text("Peak: " + numberFormat(highest), 20, 150);
    
    // load values into an array
    final int[] val1 = new int[data.size()];
@@ -72,7 +75,7 @@ void draw() {
       final int dmax = max(val1);
       final int dmin = min(val1);
       if (dmax > max) max = dmax;
-      if (dmin > min) min = dmin;
+      if (dmin < min) min = dmin;
       
       final int y = (int) map(data.get(i), min, max * 1.15, height, 0);
       final int x = i * SCALE;
@@ -102,7 +105,7 @@ void draw() {
       final int dmax = max(val2);
       final int dmin = min(val2);
       if (dmax > max) max = dmax;
-      if (dmin > min) min = dmin;
+      if (dmin < min) min = dmin;
       
       final int y = (int) map(data2.get(i), min, max * 1.15, height, 0);
       final int x = i * SCALE;
@@ -133,17 +136,24 @@ void draw() {
       py = y;
    }
    
-   if (true) {
-      curr += floor(random(r1, r2));
-      curr2 += floor(random(r3, r4));
-      data.add(curr);
-      data2.add(curr2);
-      gap.add(abs(curr - curr2));
+   curr += floor(random(r1, r2));
+   curr2 += floor(random(r3, r4));
+   data.add(curr);
+   data2.add(curr2);
+   gap.add(abs(curr - curr2));
       
-      r1 += random(-100,25);
-      r2 += random(-300,500);
-      r3 += random(-100,25);
-      r4 += random(-300,500);
+   r1 += random(-100,25);
+   r2 += random(-300,500);
+   r3 += random(-100,25);
+   r4 += random(-300,500);
+   
+   if (random(10) < 0.5) {
+      final float sub = random(1);
+      if (random(1) < 0.5) {
+         curr -= (curr * 0.15) * sub;   
+      } else {
+         curr2 -= (curr2 * 0.15) * sub;
+      }
    }
    
    if (data.size() > width) {
@@ -152,15 +162,14 @@ void draw() {
       gap.remove(0);
    }
    
-   //if (curr > curr2) {
-   //   if (!streakT) streak = 0;
-   //   streakT = true;
-   //} else {
-   //   if (streakT) streak = 0;
-   //   streakT = false;
-   //}
-   
    streak += 1;
+   
+   if (curr < 0) curr = 0;
+   if (curr2 < 0) curr2 = 0;
+   
+   final int h = max(new int[] {curr,curr2});
+   if (h > highest) highest = h;
+   
 }
 
 String numberFormat(int num) {
