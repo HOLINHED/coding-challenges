@@ -5,6 +5,8 @@ ArrayList<Integer> gap   = new ArrayList<Integer>();
 int max = 0;
 int min = 0;
 int gmax = 0;
+int streak = 0;
+boolean streakT = true;
 
 int r1 = -100;
 int r2 = 400;
@@ -28,9 +30,9 @@ void draw() {
    textSize(20);
    stroke(255);
    
-   text(numberFormat(abs(curr - curr2)), 20, 90);
-   
-   //println(curr + " - " + curr2);
+   fill(255);
+   text("Gap: " + numberFormat(abs(curr - curr2)), 20, 90);
+   text("Streak: " + numberFormat(streak), 20, 120);
    
    // load values into an array
    final int[] val1 = new int[data.size()];
@@ -54,6 +56,14 @@ void draw() {
    int py = height;
    
    stroke(0,255,255);
+   
+   if (curr > curr2) {
+      fill(255,255,0);
+      if (!streakT) streak = 0;
+      streakT = true;
+   } else {
+      fill(255);
+   }
    text(numberFormat(curr) + " (" + numberFormat(r1) + " " + numberFormat(r2) + ")", 20, 30);
    
    final int SCALE = width / data.size();
@@ -77,6 +87,14 @@ void draw() {
    py = height;
    
    stroke(255,0,0);
+   
+   if (curr2 > curr) {
+      fill(255,255,0);
+      if (streakT) streak = 0;
+      streakT = false;
+   } else {
+      fill(255);
+   }
    text(numberFormat(curr2)  + " (" + numberFormat(r3) + " " + numberFormat(r4) + ")", 20, 60);
    
    for (int i = 0; i < data2.size(); i++) {
@@ -133,6 +151,16 @@ void draw() {
       data2.remove(0);
       gap.remove(0);
    }
+   
+   //if (curr > curr2) {
+   //   if (!streakT) streak = 0;
+   //   streakT = true;
+   //} else {
+   //   if (streakT) streak = 0;
+   //   streakT = false;
+   //}
+   
+   streak += 1;
 }
 
 String numberFormat(int num) {
